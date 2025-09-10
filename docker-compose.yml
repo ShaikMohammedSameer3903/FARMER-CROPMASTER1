@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: springboot-backend
+    ports:
+      - "8081:8081"
+    networks:
+      - mynet
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
