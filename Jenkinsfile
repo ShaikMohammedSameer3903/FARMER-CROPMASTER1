@@ -16,15 +16,16 @@ pipeline {
 
         stage('Build Backend (Spring Boot)') {
             steps {
-                dir('backend') {
-                    bat 'mvnw clean package -DskipTests'
+                dir('Back End') {
+                    // Use Maven installed on Jenkins machine
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
 
         stage('Build Frontend (React)') {
             steps {
-                dir('frontend') {
+                dir('Front End') {
                     bat 'npm install'
                     bat 'npm run build'
                 }
@@ -34,8 +35,8 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    bat "docker build -t %BACKEND_IMAGE%:latest ./backend"
-                    bat "docker build -t %FRONTEND_IMAGE%:latest ./frontend"
+                    bat "docker build -t %BACKEND_IMAGE%:latest \"./Back End\""
+                    bat "docker build -t %FRONTEND_IMAGE%:latest \"./Front End\""
                 }
             }
         }
