@@ -16,8 +16,8 @@ pipeline {
 
         stage('Build Backend (Spring Boot)') {
             tools {
-                // Now including the JDK tool in the build stage
-                jdk 'JDK_11'
+                // Now using 'JDK_HOME' to match the likely Jenkins configuration
+                jdk 'JDK_HOME'
                 maven 'MAVEN_HOME'
             }
             steps {
