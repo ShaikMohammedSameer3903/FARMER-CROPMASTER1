@@ -16,13 +16,13 @@ pipeline {
 
         stage('Build Backend (Spring Boot)') {
             tools {
-                // This line tells Jenkins to use the Maven tool named 'MAVEN_HOME'
-                // This must match the name in Manage Jenkins > Tools
-                maven 'MAVEN_HOME' 
+                // Now including the JDK tool in the build stage
+                jdk 'JDK_11'
+                maven 'MAVEN_HOME'
             }
             steps {
                 dir('Back End') {
-                    // This command will now work because Maven is on the PATH
+                    // This command will now work with both Maven and JDK on the PATH
                     bat 'mvn clean package -DskipTests'
                 }
             }
