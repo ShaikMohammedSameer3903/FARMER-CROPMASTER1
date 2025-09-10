@@ -15,9 +15,14 @@ pipeline {
         }
 
         stage('Build Backend (Spring Boot)') {
+            tools {
+                // This line tells Jenkins to use the Maven tool named 'M3'
+                // You must configure this tool name in Manage Jenkins > Tools
+                maven 'M3' 
+            }
             steps {
                 dir('Back End') {
-                    // Use Maven installed on Jenkins machine
+                    // This command will now work because Maven is on the PATH
                     bat 'mvn clean package -DskipTests'
                 }
             }
