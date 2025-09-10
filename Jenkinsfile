@@ -16,9 +16,9 @@ pipeline {
 
         stage('Build Backend (Spring Boot)') {
             tools {
-                // This line tells Jenkins to use the Maven tool named 'M3'
-                // You must configure this tool name in Manage Jenkins > Tools
-                maven 'M3' 
+                // This line tells Jenkins to use the Maven tool named 'MAVEN_HOME'
+                // This must match the name in Manage Jenkins > Tools
+                maven 'MAVEN_HOME' 
             }
             steps {
                 dir('Back End') {
