@@ -17,7 +17,7 @@ pipeline {
         stage('Build Backend (Spring Boot)') {
             steps {
                 dir('backend') {
-                    sh './mvnw clean package -DskipTests'
+                    bat 'mvnw clean package -DskipTests'
                 }
             }
         }
@@ -25,8 +25,8 @@ pipeline {
         stage('Build Frontend (React)') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat 'npm install'
+                    bat 'npm run build'
                 }
             }
         }
@@ -34,23 +34,23 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    sh "docker build -t ${BACKEND_IMAGE}:latest ./backend"
-                    sh "docker build -t ${FRONTEND_IMAGE}:latest ./frontend"
+                    bat "docker build -t %BACKEND_IMAGE%:latest ./backend"
+                    bat "docker build -t %FRONTEND_IMAGE%:latest ./frontend"
                 }
             }
         }
 
         stage('Run with Docker Compose') {
             steps {
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --build"
+                bat "docker-compose -f %DOCKER_COMPOSE_FILE% down"
+                bat "docker-compose -f %DOCKER_COMPOSE_FILE% up -d --build"
             }
         }
     }
 
     post {
         always {
-            sh 'docker ps -a'
+            bat 'docker ps -a'
         }
     }
 }
